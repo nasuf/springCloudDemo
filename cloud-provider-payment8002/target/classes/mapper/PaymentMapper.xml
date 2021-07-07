@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.nasuf.springcloud.PaymentDao">
-    <resultMap id="BaseResultMap" type="com.nasuf.springcloud.Payment">
+    <resultMap id="BaseResultMap" type="com.nasuf.springcloud.entities.Payment">
         <id property="id" column="id"></id>
         <result property="serial" column="serial" jdbcType="VARCHAR"></result>
     </resultMap>
@@ -15,7 +15,7 @@
     <!-- userGeneratedKeys=true 说明把插入的值返回回来,回填到对象中
         keyProperty="id" 说明主键是id
      -->
-    <insert id="create" parameterType="com.nasuf.springcloud.Payment"
+    <insert id="create" parameterType="com.nasuf.springcloud.entities.Payment"
             useGeneratedKeys="true" keyProperty="id">
         insert into payment(serial) values(#{serial})
     </insert>
