@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.nasuf.springcloud.PaymentDao">
+<mapper namespace="com.nasuf.springcloud.dao.PaymentDao">
     <resultMap id="BaseResultMap" type="com.nasuf.springcloud.entities.Payment">
         <id property="id" column="id"></id>
         <result property="serial" column="serial" jdbcType="VARCHAR"></result>
