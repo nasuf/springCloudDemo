@@ -21,12 +21,13 @@ public class PaymentService {
             @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "3000")
     })
     public String paymentInfo_Timeout(Integer id) {
+        int a = 10/0;   // 假设运行出现异常，同样会执行paymentInfo_TimeoutHandler方法进行处理
         int time = 5000;
-        try {
-            Thread.sleep(time);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Thread.sleep(time);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
         return "Thread Pool: " + Thread.currentThread().getName() + " paymentInfo_Timeout, id: " + id + "\t 耗时(ms):" + time;
     }
 
