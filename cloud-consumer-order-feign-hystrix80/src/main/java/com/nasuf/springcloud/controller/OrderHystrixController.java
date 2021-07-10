@@ -1,6 +1,8 @@
 package com.nasuf.springcloud.controller;
 
 import com.nasuf.springcloud.service.PaymentHystrixService;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,7 +22,16 @@ public class OrderHystrixController {
     }
 
     @GetMapping(value = "/consumer/payment/hystrix/timeout/{id}")
+    @HystrixCommand(fallbackMethod = "paymentInfo_TimeoutHandler", commandProperties = {
+            // consumer 客户端超时时间为1.5s，而PaymentService超时时间为5s，且实际运行时间为3s超过了1.5s，所以应调用paymentInfo_TimeoutHandler
+            @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "1500")
+    })
     public String paymentInfo_Timeout(@PathVariable("id") Integer id) {
-        return paymentHystrixService.paymentInfo_Timeout(id);
+//        int a = 10/0;   // exception出现，会调用paymentInfo_TimeoutHandler
+        return paymentHystrixService.paymentInfo_Timeout(id);   // 或者请求服务端超时，会调用paymentInfo_TimeoutHandler
+    }
+
+    public String paymentInfo_TimeoutHandler(@PathVariable("id") Integer id) {
+        return "Consumer Port 80, PaymentService is busy now. Please try again later.";
     }
 }
