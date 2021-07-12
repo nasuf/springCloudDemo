@@ -34,7 +34,7 @@ public class OrderHystrixController {
      */
     @HystrixCommand
     public String paymentInfo_Timeout(@PathVariable("id") Integer id) {
-        int a = 10/0;   // exception出现，会调用paymentInfo_TimeoutHandler
+//        int a = 10/0;   // exception出现，会调用paymentInfo_TimeoutHandler
         return paymentHystrixService.paymentInfo_Timeout(id);   // 或者请求服务端超时，会调用paymentInfo_TimeoutHandler
     }
 
