@@ -1,8 +1,10 @@
 package com.nasuf.springcloud.service;
 
+import cn.hutool.core.util.IdUtil;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Service
 public class PaymentService {
@@ -34,4 +36,26 @@ public class PaymentService {
     public String paymentInfo_TimeoutHandler(Integer id) {
         return "Thread Pool: " + Thread.currentThread().getName() + " network busy, please try again later, id: " + id;
     }
+
+    /////////////服务熔断//////////////
+
+    @HystrixCommand(fallbackMethod = "paymentCircuitBreaker_fallback", commandProperties = {
+            // 在10s内，10次访问超过60%无法访问，断路器状态从CLOSE变为OPEN，即断路器开启
+            @HystrixProperty(name = "circuitBreaker.enabled", value = "true"),   // 是否开启断路器
+            @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold", value = "10"), // 请求次数
+            @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value = "10000"),   // 时间窗口期10s
+            @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage", value = "60")    // 失败率达到60%后跳闸
+    })
+    public String paymentCircuitBreaker(@PathVariable("id") Integer id) {
+        if (id < 0) {
+            throw new RuntimeException("*** id can not be negative");
+        }
+        String serialNumber = IdUtil.simpleUUID();
+        return Thread.currentThread().getName() + "\t" + "call successfully, serialNumber: " + serialNumber;
+    }
+
+    public String paymentCircuitBreaker_fallback(@PathVariable("id") Integer id) {
+        return "*** id can not be negative. paymentCircuitBreaker_fallback called now. Please try again. id: " + id;
+    }
+
 }
