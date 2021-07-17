@@ -5,6 +5,8 @@ import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.time.ZonedDateTime;
+
 @Configuration
 public class GatewayConfig {
 
@@ -18,5 +20,10 @@ public class GatewayConfig {
                 ).build();
         return routes.build();
     }
+
+    /*public static void main(String[] args) {
+        ZonedDateTime d = ZonedDateTime.now();
+        System.out.println(d);
+    }*/
 
 }

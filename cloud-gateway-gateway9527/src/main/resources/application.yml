@@ -21,6 +21,10 @@ spring:
           uri: lb://CLOUD-PAYMENT-SERVICE
           predicates:
             - Path=/payment/lb/**
+#            - After=2021-07-17T17:09:03.168+08:00[Asia/Shanghai] #表明在这个时间之后生效
+#            - Between=2021-07-17T17:09:03.168+08:00[Asia/Shanghai],2021-07-17T17:10:03.168+08:00[Asia/Shanghai] #表明在这个时间段内生效
+#            - Cookie=username,nasuf #表明请求需要携带cookie: {username=nasuf}; 使用curl测试：curl http://localhost:9527/payment/lb --cookie "username=nasuf"
+            - Header=X-Request-Id, \d+ #请求头要有X-Request-Id，且值为正数（正则表达式）; 使用curl测试：curl http://localhost:9527/payment/lb -H "X-Request-Id:123"
 
 
 eureka:
