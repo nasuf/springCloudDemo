@@ -23,7 +23,9 @@ spring:
     username: admin
     password: admin
 
-# 暴露bus刷新配置的端点; 当配置文件在github上做了修改，使用 curl -X POST "http://localhost:3344/actuator/bus-refresh" 通过总线将修改信息分发到所有client节点
+# 暴露bus刷新配置的端点;
+# 当配置文件在github上做了修改，使用 curl -X POST "http://localhost:3344/actuator/bus-refresh" 通过总线将修改信息分发到所有client节点
+# 定向通知：curl -X POST "http://localhost:3344/actuator/bus-refresh/cloud-config-client:3355"
 management:
   endpoints:
     web:
