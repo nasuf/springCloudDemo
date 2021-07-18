@@ -13,6 +13,22 @@ spring:
           search-path: #读取目录
             - springcloud-config
       label: master #默认读取分支，即如果访问http://localhost:3344/config-dev.yml,则默认读取master分支的config-dev.yml文件
+# 使用docker安装rabbitmq:
+  # docker pull rabbitmq:management
+  # docker run -dit --name RabbitMQ -e RABBITMQ_DEFAULT_USER=admin -e RABBITMQ_DEFAULT_PASS=admin -p 15672:15672 -p 5672:5672 rabbitmq:management
+# rabbitmq相关配置
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: admin
+    password: admin
+
+# 暴露bus刷新配置的端点; 当配置文件在github上做了修改，使用 curl -X POST "http://localhost:3344/actuator/bus-refresh" 通过总线将修改信息分发到所有client节点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: 'bus-refresh'
 
 eureka:
   client:
