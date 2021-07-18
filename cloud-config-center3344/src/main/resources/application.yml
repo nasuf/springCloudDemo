@@ -12,7 +12,7 @@ spring:
           # http://localhost:3344/master/config-dev.yml 访问github上的master分支config-dev.yml文件直接返回
           search-path: #读取目录
             - springcloud-config
-      label: master #读取分支
+      label: master #默认读取分支，即如果访问http://localhost:3344/config-dev.yml,则默认读取master分支的config-dev.yml文件
 
 eureka:
   client:
