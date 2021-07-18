@@ -21,6 +21,7 @@ spring:
           destination: iExchange  # 表示要使用的Exchange名称
           content-type: application/json # 设置消息类型，此处为json，文本则设置'text/plain'
           binder: defaultRabbit # 设置要绑定的消息服务具体设置
+          group: customizedGroup01 # 默认情况下每个binding均为不同的group
 
 eureka:
   client:
