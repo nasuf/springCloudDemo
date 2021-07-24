@@ -11,5 +11,14 @@ spring:
       config:
         server-addr: localhost:8848
         file-extension: yaml
+
 # nacos配置规则：
 # ${spring.application.name}-${spring.profile.active}.${spring.cloud.nacos.file-extension}
+
+# 修改nacos配置 -> 默认数据库从derby改为mysql并重启nacos
+# /Users/nasuf/Project/nacos/conf/application.properties ->
+  # spring.datasource.platform=mysql
+  # db.num=1
+  # db.url.0=jdbc:mysql://192.168.31.178:3306/nacos_config?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true
+  # db.user=root
+  # db.password=root
